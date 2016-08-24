@@ -19,6 +19,7 @@
     <!--http://doduck.com/adding-local-jar-in-maven-local-repository/-->
         <repository>
             <id>my-internal-site</id>
+            <!--https://blogs.msdn.microsoft.com/ie/2006/12/06/file-uris-in-windows/ -->
             <url>file:///D:/projects/felixbook/releases</url>
             <releases>
                 <updatePolicy>always</updatePolicy>
