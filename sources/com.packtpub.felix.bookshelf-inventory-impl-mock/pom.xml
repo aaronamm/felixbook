@@ -15,24 +15,22 @@
     </description>
 
     <repositories>
+    <!--lean more about local repository-->
+    <!--http://doduck.com/adding-local-jar-in-maven-local-repository/-->
         <repository>
             <id>my-internal-site</id>
             <url>file:///D:/projects/felixbook/releases</url>
-           <releases>
-                <enabled>true</enabled>
+            <releases>
+                <updatePolicy>always</updatePolicy>
             </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
         </repository>
     </repositories>
 
 
     <dependencies>
         <dependency>
-            <groupId>com.packpub.felix</groupId>
+            <groupId>com.packtpub.felix</groupId>
             <artifactId>com.packtpub.felix.bookshelf-inventory-api</artifactId>
-            <scope>system</scope>
             <version>1.5.0</version>
         </dependency>
     </dependencies>
