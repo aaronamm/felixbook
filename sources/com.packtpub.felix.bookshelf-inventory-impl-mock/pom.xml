@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.packpub.felix</groupId>
+    <artifactId>com.packpub.felix.bookshelf-inventory-impl-mock</artifactId>
+    <version>1.5.0</version>
+
+    <packaging>bundle</packaging>
+    <name>Bookshelf Inventory Impl - Mock</name>
+    <description>
+        memory-based mock implementation of the Bookshelf Inventory API
+    </description>
+
+    <repositories>
+        <repository>
+            <id>my-internal-site</id>
+            <url>file:///D:/projects/felixbook/releases</url>
+           <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>com.packpub.felix</groupId>
+            <artifactId>com.packtpub.felix.bookshelf-inventory-api</artifactId>
+            <scope>system</scope>
+            <version>1.5.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Category>sample</Bundle-Category>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>
+                            com.packpub.felix.bookshelf.inventory.impl-mock
+                        </Export-Package>
+                    </instructions>
+                    <remoteOBR>repo-rel</remoteOBR>
+                    <prefixUrl>
+                        file:///D:/projects/felixbook/releases
+                    </prefixUrl>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <inherited>true</inherited>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+
+    </build>
+
+
+    <distributionManagement>
+        <repository>
+            <id>repo-rel</id>
+            <url>file:///D:/projects/felixbook/releases</url>
+        </repository>
+    </distributionManagement>
+
+
+</project>
