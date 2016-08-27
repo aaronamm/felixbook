@@ -12,12 +12,12 @@
     <name>Bookshelf Inventory API</name>
     <description>Define the API for the Bookshelf inventory.</description>
 
-
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
