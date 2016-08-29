@@ -51,6 +51,7 @@
                             com.packpub.felix.bookshelf.inventory.impl-mock
                         </Export-Package>
                     </instructions>
+                    <!--OSGi repository-->
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
                         file:///D:/projects/felixbook/releases
@@ -78,6 +79,5 @@
             <url>file:///D:/projects/felixbook/releases</url>
         </repository>
     </distributionManagement>
-
 
 </project>

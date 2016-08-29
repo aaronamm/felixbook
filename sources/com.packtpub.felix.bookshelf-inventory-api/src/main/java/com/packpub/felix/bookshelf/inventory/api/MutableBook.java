@@ -1,6 +1,6 @@
 package com.packpub.felix.bookshelf.inventory.api;
 
-public  interface MutableBook {
+public  interface MutableBook extends Book {
 
     void setIsbn(String isbn);
 
@@ -10,5 +10,5 @@ public  interface MutableBook {
 
     void setCategory(String category);
 
-    void setRating(String rating);
+    void setRating(int rating);
 }
