@@ -9,9 +9,9 @@ public interface BookInventory {
         ISBN_LIKE,
         TITLE_LIKE,
         AUTHOR_LIKE,
-        GROUP_LIKE,
-        GRADE_GT,
-        GRADE_LT
+        CATEGORY_LIKE,
+        RATE_GT,
+        RATE_LT
     }
 
     Set<String> getCategories();

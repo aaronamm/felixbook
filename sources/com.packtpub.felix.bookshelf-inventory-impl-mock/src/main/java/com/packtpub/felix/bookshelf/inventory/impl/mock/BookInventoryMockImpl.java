@@ -2,9 +2,7 @@ package com.packtpub.felix.bookshelf.inventory.impl.mock;
 
 import com.packpub.felix.bookshelf.inventory.api.*;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class BookInventoryMockImpl implements BookInventory {
     public static final String DEFAULT_CATEGORY = "default";
@@ -19,8 +17,12 @@ public class BookInventoryMockImpl implements BookInventory {
         return new MutableBookImpl(isbn);
     }
 
-    public MutableBook loadBookForEdit(String s) throws BookNotFoundException {
-        return null;
+    public MutableBook loadBookForEdit(String isbn) throws BookNotFoundException {
+        MutableBook book = this.booksByISBN.get(isbn);
+        if (book == null) {
+            throw new BookNotFoundException(isbn);
+        }
+        return book;
     }
 
     public String storeBook(MutableBook book) throws InvalidBookException {
@@ -45,15 +47,126 @@ public class BookInventoryMockImpl implements BookInventory {
         return isbn;
     }
 
-    public Book loadBook(String s) throws BookNotFoundException {
-        return null;
+    public Book loadBook(String isbn) throws BookNotFoundException {
+        return loadBookForEdit(isbn);
     }
 
     public void removeBook(String s) throws BookNotFoundException {
 
     }
 
-    public Set<String> searchBooks(Map<SearchCriteria, String> map) {
-        return null;
+    public Set<String> searchBooks(Map<SearchCriteria, String> criteria) {
+        LinkedList<Book> books = new LinkedList<Book>();
+        books.addAll(this.booksByISBN.values());
+        for (Map.Entry<SearchCriteria, String> criterion : criteria.entrySet()) {
+            Iterator<Book> it = books.iterator();
+            while (it.hasNext()) {
+                Book book = it.next();
+                switch (criterion.getKey()) {
+                    case AUTHOR_LIKE:
+                        if (!checkStringMatch(book.getAuthor(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                    case ISBN_LIKE:
+                        if (!checkStringMatch(book.getIsbn(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                    case CATEGORY_LIKE:
+                        if (!checkStringMatch(book.getCategory(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                    case TITLE_LIKE:
+                        if (!checkStringMatch(book.getTitle(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                    case RATE_GT:
+                        if (!checkIntegerGreater(book.getRating(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                    case RATE_LT:
+                        if (!checkIntegerSmaller(book.getRating(), criterion.getValue())) {
+                            it.remove();
+                            continue;
+                        }
+                        break;
+                }
+
+
+            }
+        }
+
+        //copy match with criteria book
+        HashSet<String> isbns = new HashSet<String>();
+        for(Book book : books){
+            isbns.add(book.getIsbn());
+        }
+        return isbns;
+    }
+
+    private boolean checkStringMatch(String attr, String critVal) {
+        if (attr == null) {
+            return false;
+        }
+        attr = attr.toLowerCase();
+        critVal = critVal.toLowerCase();
+        boolean startsWith = critVal.startsWith("%");
+        boolean endsWith = critVal.endsWith("%");
+
+        if (startsWith && endsWith) {
+            if (critVal.length() == 1) {//greedy criVal = "%"
+                return true;
+            } else {
+                //"%t%" 1, length-1
+                return attr.contains(critVal.substring(1, critVal.length() - 1));
+            }
+        } else if (startsWith) {
+            //%test
+            return attr.endsWith(critVal.substring(1));
+        } else if (endsWith) {
+            //test%
+            return attr.startsWith(attr.substring(0, attr.length() - 1));
+        } else {
+            return attr.equals(critVal);
+        }
+
+    }
+
+    private boolean checkIntegerGreater(int attr, String critVal) {
+        int critValInt;
+        try {
+            critValInt = Integer.parseInt(critVal);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+        if (attr >= critValInt) {
+            return true;
+        }
+        return false;
+
+    }
+
+    private boolean checkIntegerSmaller(int attr, String critVal) {
+
+        int critValInt;
+        try {
+            critValInt = Integer.parseInt(critVal);
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+
+        if (attr <= critValInt) {
+            return true;
+        }
+        return false;
     }
 }
