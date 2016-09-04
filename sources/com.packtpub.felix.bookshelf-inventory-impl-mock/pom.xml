@@ -34,6 +34,14 @@
             <artifactId>com.packtpub.felix.bookshelf-inventory-api</artifactId>
             <version>1.5.0</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.felix/org.osgi.core -->
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
