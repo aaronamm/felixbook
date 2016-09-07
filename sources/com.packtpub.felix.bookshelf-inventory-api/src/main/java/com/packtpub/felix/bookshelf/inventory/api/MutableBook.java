@@ -1,4 +1,4 @@
-package com.packpub.felix.bookshelf.inventory.api;
+package com.packtpub.felix.bookshelf.inventory.api;
 
 public  interface MutableBook extends Book {
 

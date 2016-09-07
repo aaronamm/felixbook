@@ -24,13 +24,14 @@
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            com.packpub.felix.bookshelf.inventory.api
+                         com.packtpub.felix.bookshelf.inventory.api
                         </Export-Package>
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
                         file:///D:/projects/felixbook/releases
                     </prefixUrl>
+                    <ignoreLock>true</ignoreLock>
                 </configuration>
             </plugin>
 

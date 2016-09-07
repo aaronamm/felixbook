@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.packpub.felix</groupId>
-    <artifactId>com.packpub.felix.bookshelf-inventory-impl-mock</artifactId>
+    <groupId>com.packtpub.felix</groupId>
+    <artifactId>com.packtpub.felix.bookshelf-inventory-impl-mock</artifactId>
     <version>1.5.0</version>
 
     <packaging>bundle</packaging>
@@ -15,8 +15,8 @@
     </description>
 
     <repositories>
-    <!--lean more about local repository-->
-    <!--http://doduck.com/adding-local-jar-in-maven-local-repository/-->
+        <!--lean more about local repository-->
+        <!--http://doduck.com/adding-local-jar-in-maven-local-repository/-->
         <repository>
             <id>my-internal-site</id>
             <!--https://blogs.msdn.microsoft.com/ie/2006/12/06/file-uris-in-windows/ -->
@@ -56,14 +56,17 @@
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Export-Package>
-                            com.packpub.felix.bookshelf.inventory.impl-mock
+                            com.packtpub.felix.bookshelf.inventory.impl.mock
                         </Export-Package>
+                        <private-Package>
+                            com.packtpub.felix.bookshelf.inventory.impl.mock.activator
+                        </private-Package>
                     </instructions>
-                    <!--OSGi repository-->
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
                         file:///D:/projects/felixbook/releases
                     </prefixUrl>
+                    <ignoreLock>true</ignoreLock>
                 </configuration>
             </plugin>
 
@@ -79,7 +82,6 @@
 
 
     </build>
-
 
     <distributionManagement>
         <repository>

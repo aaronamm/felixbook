@@ -1,6 +1,6 @@
 package com.packtpub.felix.bookshelf.inventory.impl.mock;
 
-import com.packpub.felix.bookshelf.inventory.api.MutableBook;
+import com.packtpub.felix.bookshelf.inventory.api.MutableBook;
 
 public class MutableBookImpl implements MutableBook {
 

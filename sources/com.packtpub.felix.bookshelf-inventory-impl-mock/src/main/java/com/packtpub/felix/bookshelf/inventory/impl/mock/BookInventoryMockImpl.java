@@ -1,6 +1,6 @@
 package com.packtpub.felix.bookshelf.inventory.impl.mock;
 
-import com.packpub.felix.bookshelf.inventory.api.*;
+import com.packtpub.felix.bookshelf.inventory.api.*;
 
 import java.util.*;
 

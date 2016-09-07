@@ -1,6 +1,6 @@
 package com.packtpub.felix.bookshelf.inventory.impl.mock.activator;
 
-import com.packpub.felix.bookshelf.inventory.api.BookInventory;
+import com.packtpub.felix.bookshelf.inventory.api.BookInventory;
 import com.packtpub.felix.bookshelf.inventory.impl.mock.BookInventoryMockImpl;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
