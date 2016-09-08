@@ -11,8 +11,10 @@ public class BookInventoryMockImplActivator implements BundleActivator {
 
     public void start(BundleContext context) throws Exception {
         System.out.println("\nStarting Book Inventory Mock Impl");
-        this.reg = context.registerService(BookInventory.class.getName(),
-                new BookInventoryMockImpl(), null);
+        System.out.println("\nStarting Book Inventory Mock Impl");
+
+        //register name is very important
+        this.reg = context.registerService(BookInventory.class.getName(), new BookInventoryMockImpl(), null);
     }
 
     public void stop(BundleContext context) throws Exception {
