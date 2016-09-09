@@ -22,10 +22,8 @@
                 <configuration>
                     <instructions>
                         <Bundle-Category>sample</Bundle-Category>
-                        <Bundle-SymbolicName>${artifactId}</Bundle-SymbolicName>
-                        <Export-Package>
-                         com.packtpub.felix.bookshelf.inventory.api
-                        </Export-Package>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Export-Package>com.packtpub.felix.bookshelf.inventory.api</Export-Package>
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
@@ -36,7 +34,9 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
                 <inherited>true</inherited>
                 <configuration>
                     <source>1.5</source>
@@ -54,5 +54,9 @@
             <url>file:///D:/projects/felixbook/releases</url>
         </repository>
     </distributionManagement>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
 </project>

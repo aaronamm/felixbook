@@ -35,12 +35,13 @@
             <version>1.5.0</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.felix/org.osgi.core -->
+        <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.core -->
         <dependency>
-            <groupId>org.apache.felix</groupId>
+            <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
-            <version>1.4.0</version>
+            <version>4.3.1</version>
         </dependency>
+
 
     </dependencies>
 
@@ -55,12 +56,9 @@
                     <instructions>
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>
-                            com.packtpub.felix.bookshelf.inventory.impl.mock
-                        </Export-Package>
-                        <private-Package>
-                            com.packtpub.felix.bookshelf.inventory.impl.mock.activator
-                        </private-Package>
+                        <Export-Package>com.packtpub.felix.bookshelf.inventory.impl.mock</Export-Package>
+                        <Bundle-Activator>com.packtpub.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator</Bundle-Activator>
+                        <private-Package>com.packtpub.felix.bookshelf.inventory.impl.mock.activator</private-Package>
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
@@ -71,7 +69,10 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+
                 <inherited>true</inherited>
                 <configuration>
                     <source>1.5</source>
@@ -90,4 +91,7 @@
         </repository>
     </distributionManagement>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 </project>
