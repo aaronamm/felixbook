@@ -31,7 +31,7 @@ public class MutableBookImpl implements MutableBook {
     }
 
     public void setRating(int rating) {
-       this.setRating(rating);
+        this.rating = rating;
     }
 
     public String getIsbn() {

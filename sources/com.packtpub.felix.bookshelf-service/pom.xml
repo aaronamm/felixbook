@@ -5,28 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.packtpub.felix</groupId>
-    <artifactId>com.packtpub.felix.bookshelf-inventory-impl-mock</artifactId>
+    <artifactId>com.packtpub.felix.bookshelf-service</artifactId>
     <version>1.5.0</version>
-
     <packaging>bundle</packaging>
-    <name>Bookshelf Inventory Impl - Mock</name>
+
+    <name>Bookshelf Service</name>
     <description>
-        memory-based mock implementation of the Bookshelf Inventory API
+        service for bookshelf
     </description>
-
-    <repositories>
-        <!--lean more about local repository-->
-        <!--http://doduck.com/adding-local-jar-in-maven-local-repository/-->
-        <repository>
-            <id>my-internal-site</id>
-            <!--https://blogs.msdn.microsoft.com/ie/2006/12/06/file-uris-in-windows/ -->
-            <url>file:///D:/projects/felixbook/releases</url>
-            <releases>
-                <updatePolicy>always</updatePolicy>
-            </releases>
-        </repository>
-    </repositories>
-
 
     <dependencies>
         <dependency>
@@ -41,8 +27,6 @@
             <artifactId>org.osgi.core</artifactId>
             <version>4.3.1</version>
         </dependency>
-
-
     </dependencies>
 
     <build>
@@ -56,9 +40,10 @@
                     <instructions>
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>com.packtpub.felix.bookshelf.inventory.impl.mock</Export-Package>
-                        <Bundle-Activator>com.packtpub.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator</Bundle-Activator>
-                        <private-Package>com.packtpub.felix.bookshelf.inventory.impl.mock.activator</private-Package>
+                        <Export-Package>com.packtpub.felix.bookshelf.service.api</Export-Package>
+                        <!--define activator and private its package-->
+                        <Bundle-Activator>com.packtpub.felix.bookshelf.service.impl.activator.BookshelfServiceImplActivator</Bundle-Activator>
+                        <private-Package>com.packtpub.felix.bookshelf.service.impl.activator</private-Package>
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
@@ -80,8 +65,6 @@
                 </configuration>
             </plugin>
         </plugins>
-
-
     </build>
 
     <distributionManagement>
