@@ -16,6 +16,7 @@
 
     <dependencies>
 
+
         <dependency>
             <groupId>com.packtpub.felix</groupId>
             <artifactId>com.packtpub.felix.bookshelf-service</artifactId>
@@ -28,6 +29,15 @@
             <artifactId>org.osgi.core</artifactId>
             <version>4.3.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.gogo.runtime -->
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.runtime</artifactId>
+            <version>0.16.2</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
