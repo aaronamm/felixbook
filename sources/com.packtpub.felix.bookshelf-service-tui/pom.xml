@@ -23,6 +23,14 @@
             <version>1.5.0</version>
         </dependency>
 
+
+
+        <dependency>
+            <groupId>com.packtpub.felix</groupId>
+            <artifactId>com.packtpub.felix.bookshelf-inventory-api</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.core -->
         <dependency>
             <groupId>org.osgi</groupId>
@@ -51,13 +59,19 @@
                     <instructions>
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package></Export-Package>
-                        <Bundle-Activator></Bundle-Activator>
-                        <private-Package></private-Package>
+                        <Export-Package>
+                            com.packtpub.felix.bookshelf.service.tui
+                        </Export-Package>
+                        <Bundle-Activator>
+                            com.packtpub.felix.bookshelf.service.tui.activator.BookshelfTuiActivator
+                        </Bundle-Activator>
+                        <private-Package>
+                            com.packtpub.felix.bookshelf.service.tui.activator
+                        </private-Package>
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
-                        file:///D:/projects/felixbook/releases
+                        file:///C:/aaron/projects/fexlixbook/releases
                     </prefixUrl>
                     <ignoreLock>true</ignoreLock>
                 </configuration>
@@ -80,7 +94,9 @@
     <distributionManagement>
         <repository>
             <id>repo-rel</id>
-            <url>file:///D:/projects/felixbook/releases</url>
+            <url>
+                file:///C:/aaron/projects/fexlixbook/releases
+            </url>
         </repository>
     </distributionManagement>
 

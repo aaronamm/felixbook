@@ -1,7 +1,10 @@
 package com.packtpub.felix.bookshelf.service.impl;
 
 import com.packtpub.felix.bookshelf.inventory.api.*;
-import com.packtpub.felix.bookshelf.service.api.*;
+import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntimeException;
+import com.packtpub.felix.bookshelf.service.api.BookshelfService;
+import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
+import com.packtpub.felix.bookshelf.service.api.SessionNotValidRuntimeException;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import java.util.Arrays;

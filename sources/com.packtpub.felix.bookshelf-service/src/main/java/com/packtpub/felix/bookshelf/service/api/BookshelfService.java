@@ -1,8 +1,6 @@
 package com.packtpub.felix.bookshelf.service.api;
 
 import com.packtpub.felix.bookshelf.inventory.api.*;
-import com.packtpub.felix.bookshelf.service.impl.BookInventoryNotRegisteredRuntimeException;
-import com.packtpub.felix.bookshelf.service.impl.SessionNotValidRuntimeException;
 
 import java.util.Set;
 

@@ -2,7 +2,7 @@ package com.packtpub.felix.bookshelf.service.impl.activator;
 
 import com.packtpub.felix.bookshelf.inventory.api.*;
 import com.packtpub.felix.bookshelf.service.api.*;
-import com.packtpub.felix.bookshelf.service.impl.*;
+import com.packtpub.felix.bookshelf.service.impl.BookshelfServiceImpl;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
