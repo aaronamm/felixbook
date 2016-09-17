@@ -26,26 +26,27 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
             @Descriptor("password") String password,
             @Descriptor("search on attribute: author, title, or category") String attribute,
             @Descriptor("match like (use % at the beginning or end of <like>" +
-                    " for wild-card)") String filter)
-            throws InvalidCredentialsException,
-            BookInventoryNotRegisteredRuntimeException,
-            SessionNotValidRuntimeException, BookNotFoundException {
+                    " for wild-card)") String filter) {
+        try {
+            BookshelfService service = lookupService();
+            String sessionId = service.login(username, password.toCharArray());
 
-        BookshelfService service = lookupService();
-        String sessionId = service.login(username, password.toCharArray());
+            Set<String> results = new HashSet<String>();
+            if ("title".equals(attribute)) {
+                results = service.searchBooksByTitle(sessionId, filter);
+            } else if ("author".equals(attribute)) {
+                results = service.searchBooksByAuthor(sessionId, filter);
+            } else if ("category".equals(attribute)) {
+                results = service.searchBooksByCategory(sessionId, filter);
+            } else {
+                throw new RuntimeException("Invalid attribute, expecting one of { 'title', " + "'author', 'category' } got '" + attribute + "'");
+            }
 
-        Set<String> results = new HashSet<String>();
-        if ("title".equals(attribute)) {
-            results = service.searchBooksByTitle(sessionId, filter);
-        } else if ("author".equals(attribute)) {
-            results = service.searchBooksByAuthor(sessionId, filter);
-        } else if ("category".equals(attribute)) {
-            results = service.searchBooksByCategory(sessionId, filter);
-        } else {
-            throw new RuntimeException( "Invalid attribute, expecting one of { 'title', " + "'author', 'category' } got '" + attribute + "'");
+            return getBooks(sessionId, service, results);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new HashSet<Book>();
         }
-
-        return getBooks(sessionId, service, results);
     }
 
     private BookshelfService lookupService() {
@@ -64,23 +65,24 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
 
 
     @Descriptor("Search books by rating")
-    public Set<Book> search(
-            @Descriptor("username") String username,
-            @Descriptor("password") String password,
-            @Descriptor("search on attribute: rating") String attribute,
-            @Descriptor("lower rating limit (inclusive)") int lower,
-            @Descriptor("upper rating limit (inclusive)") int upper)
-            throws InvalidCredentialsException, BookInventoryNotRegisteredRuntimeException, SessionNotValidRuntimeException, BookNotFoundException {
-        if (!"rating".equals(attribute))
-        {
-            throw new RuntimeException( "Invalid attribute, expecting 'rating' got '"+ attribute+"'");
+    public Set<Book> search(@Descriptor("username") String username, @Descriptor("password") String password,
+                            @Descriptor("search on attribute: rating") String attribute,
+                            @Descriptor("lower rating limit (inclusive)") int lower,
+                            @Descriptor("upper rating limit (inclusive)") int upper) {
+        try {
+            if (!"rating".equals(attribute)) {
+                throw new RuntimeException("Invalid attribute, expecting 'rating' got '" + attribute + "'");
+            }
+            BookshelfService service = lookupService();
+            String sessionId =
+                    service.login(username, password.toCharArray());
+            Set<String> results = service.searchBooksByRating(sessionId, lower, upper);
+            return getBooks(sessionId, service, results);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return new HashSet<Book>();
         }
-        BookshelfService service = lookupService();
-        String sessionId =
-                service.login(username, password.toCharArray());
-        Set<String> results = service.searchBooksByRating(sessionId, lower, upper);
-        return getBooks(sessionId, service, results);
-        }
+    }
 
     private Set<Book> getBooks(String sessionId, BookshelfService service, Set<String> results) throws SessionNotValidRuntimeException, BookNotFoundException, BookInventoryNotRegisteredRuntimeException {
 
@@ -90,6 +92,25 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
             books.add(book);
         }
         return books;
+    }
+
+    public String add(@Descriptor("username") String username,
+                      @Descriptor("password") String password,
+                      @Descriptor("ISBN") String isbn,
+                      @Descriptor("Title") String title,
+                      @Descriptor("Author") String author,
+                      @Descriptor("Category") String category,
+                      @Descriptor("Rating (0..10)") int rating) {
+        try {
+            BookshelfService service = lookupService();
+            String sessionId = service.login(
+                    username, password.toCharArray());
+            service.addBook( sessionId, isbn, title, author, category, rating);
+            return isbn;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
 }

@@ -15,24 +15,13 @@ import java.util.Set;
 public interface BookshelfServiceProxy {
     String SCOPE = "book";
     String[] FUNCTIONS = new String[]{
-            "search"
+            "search", "add"
     };
 
-    Set<Book> search(
-             String username,
-             String password,
-             String attribute,
-             String filter)
-            throws InvalidCredentialsException,
-            BookInventoryNotRegisteredRuntimeException,
-            SessionNotValidRuntimeException, BookNotFoundException;
+    Set<Book> search(String username, String password, String attribute, String filter);
 
-    Set<Book> search(
-            String username,
-            String password,
-            String attribute,
-            int lower,
-            int upper)
-            throws InvalidCredentialsException,
-            BookInventoryNotRegisteredRuntimeException, SessionNotValidRuntimeException, BookNotFoundException;
+    Set<Book> search(String username, String password, String attribute, int lower, int upper);
+
+    String add(String username, String password, String isbn, String title, String author, String category, int rating);
+
 }
