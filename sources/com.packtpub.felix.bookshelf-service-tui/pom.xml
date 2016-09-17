@@ -63,7 +63,7 @@
                             com.packtpub.felix.bookshelf.service.tui
                         </Export-Package>
                         <Bundle-Activator>
-                            com.packtpub.felix.bookshelf.service.tui.activator.BookshelfTuiActivator
+                           com.packtpub.felix.bookshelf.service.tui.activator.BookshelfTuiActivator
                         </Bundle-Activator>
                         <private-Package>
                             com.packtpub.felix.bookshelf.service.tui.activator
@@ -71,7 +71,7 @@
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
-                        file:///C:/aaron/projects/fexlixbook/releases
+                        file:///C:/aaron/projects/felixbook/releases
                     </prefixUrl>
                     <ignoreLock>true</ignoreLock>
                 </configuration>
@@ -95,7 +95,7 @@
         <repository>
             <id>repo-rel</id>
             <url>
-                file:///C:/aaron/projects/fexlixbook/releases
+                file:///C:/aaron/projects/felixbook/releases
             </url>
         </repository>
     </distributionManagement>

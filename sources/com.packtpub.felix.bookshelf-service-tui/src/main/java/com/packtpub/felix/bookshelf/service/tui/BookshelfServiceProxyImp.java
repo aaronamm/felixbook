@@ -1,0 +1,95 @@
+package com.packtpub.felix.bookshelf.service.tui;
+
+import com.packtpub.felix.bookshelf.inventory.api.Book;
+import com.packtpub.felix.bookshelf.inventory.api.BookNotFoundException;
+import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntimeException;
+import com.packtpub.felix.bookshelf.service.api.BookshelfService;
+import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
+import com.packtpub.felix.bookshelf.service.api.SessionNotValidRuntimeException;
+import org.apache.felix.service.command.Descriptor;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
+    private BundleContext context;
+
+    public BookshelfServiceProxyImp(BundleContext context) {
+        this.context = context;
+    }
+
+    @Descriptor("Search books by author, title, or category")
+    public Set<Book> search(
+            @Descriptor("username") String username,
+            @Descriptor("password") String password,
+            @Descriptor("search on attribute: author, title, or category") String attribute,
+            @Descriptor("match like (use % at the beginning or end of <like>" +
+                    " for wild-card)") String filter)
+            throws InvalidCredentialsException,
+            BookInventoryNotRegisteredRuntimeException,
+            SessionNotValidRuntimeException, BookNotFoundException {
+
+        BookshelfService service = lookupService();
+        String sessionId = service.login(username, password.toCharArray());
+
+        Set<String> results = new HashSet<String>();
+        if ("title".equals(attribute)) {
+            results = service.searchBooksByTitle(sessionId, filter);
+        } else if ("author".equals(attribute)) {
+            results = service.searchBooksByAuthor(sessionId, filter);
+        } else if ("category".equals(attribute)) {
+            results = service.searchBooksByCategory(sessionId, filter);
+        } else {
+            throw new RuntimeException( "Invalid attribute, expecting one of { 'title', " + "'author', 'category' } got '" + attribute + "'");
+        }
+
+        return getBooks(sessionId, service, results);
+    }
+
+    private BookshelfService lookupService() {
+        ServiceReference reference = context.getServiceReference(BookshelfService.class.getName());
+        if (reference == null) {
+            throw new RuntimeException("BookshelfService not registered, cannot invoke operation");
+        }
+
+        BookshelfService service = (BookshelfService) this.context.getService(reference);
+        if (service == null) {
+            // could have been unregistered since above lookup
+            throw new RuntimeException("BookshelfService not registered, cannot invoke operation");
+        }
+        return service;
+    }
+
+
+    @Descriptor("Search books by rating")
+    public Set<Book> search(
+            @Descriptor("username") String username,
+            @Descriptor("password") String password,
+            @Descriptor("search on attribute: rating") String attribute,
+            @Descriptor("lower rating limit (inclusive)") int lower,
+            @Descriptor("upper rating limit (inclusive)") int upper)
+            throws InvalidCredentialsException, BookInventoryNotRegisteredRuntimeException, SessionNotValidRuntimeException, BookNotFoundException {
+        if (!"rating".equals(attribute))
+        {
+            throw new RuntimeException( "Invalid attribute, expecting 'rating' got '"+ attribute+"'");
+        }
+        BookshelfService service = lookupService();
+        String sessionId =
+                service.login(username, password.toCharArray());
+        Set<String> results = service.searchBooksByRating(sessionId, lower, upper);
+        return getBooks(sessionId, service, results);
+        }
+
+    private Set<Book> getBooks(String sessionId, BookshelfService service, Set<String> results) throws SessionNotValidRuntimeException, BookNotFoundException, BookInventoryNotRegisteredRuntimeException {
+
+        Set<Book> books = new HashSet<Book>();
+        for (String isbn : results) {
+            Book book = service.getBook(sessionId, isbn);
+            books.add(book);
+        }
+        return books;
+    }
+
+}

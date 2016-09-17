@@ -62,7 +62,7 @@
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
-                        file:///C:/aaron/projects/fexlixbook/releases
+                        file:///C:/aaron/projects/felixbook/releases
                     </prefixUrl>
                     <ignoreLock>true</ignoreLock>
                 </configuration>
@@ -87,7 +87,7 @@
     <distributionManagement>
         <repository>
             <id>repo-rel</id>
-            <url>file:///C:/aaron/projects/fexlixbook/releases</url>
+            <url>file:///C:/aaron/projects/felixbook/releases</url>
         </repository>
     </distributionManagement>
 
