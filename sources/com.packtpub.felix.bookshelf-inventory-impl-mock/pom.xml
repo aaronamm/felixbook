@@ -6,7 +6,7 @@
 
     <groupId>com.packtpub.felix</groupId>
     <artifactId>com.packtpub.felix.bookshelf-inventory-impl-mock</artifactId>
-    <version>1.5.0</version>
+    <version>1.9.0</version>
 
     <packaging>bundle</packaging>
     <name>Bookshelf Inventory Impl - Mock</name>
@@ -42,6 +42,12 @@
             <version>4.3.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.felix/org.apache.felix.ipojo.annotations -->
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+            <version>1.12.1</version>
+        </dependency>
 
     </dependencies>
 
@@ -56,9 +62,12 @@
                     <instructions>
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
-                        <Export-Package>com.packtpub.felix.bookshelf.inventory.impl.mock</Export-Package>
-                        <Bundle-Activator>com.packtpub.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator</Bundle-Activator>
-                        <private-Package>com.packtpub.felix.bookshelf.inventory.impl.mock.activator</private-Package>
+                        <!--We don't need it because we use iPojo-->
+                        <!--<Export-Package>com.packtpub.felix.bookshelf.inventory.impl.mock</Export-Package>-->
+                        <!--<Bundle-Activator>-->
+                            <!--com.packtpub.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator-->
+                        <!--</Bundle-Activator>-->
+                        <!--<private-Package>com.packtpub.felix.bookshelf.inventory.impl.mock.activator</private-Package>-->
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
@@ -79,8 +88,25 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-        </plugins>
 
+            <!-- https://mvnrepository.com/artifact/org.apache.felix/maven-ipojo-plugin -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-ipojo-plugin</artifactId>
+                <version>1.12.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                        <configuration>
+                            <!--<metadata>src/main/ipojo/meta.xml</metadata>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
 
     </build>
 
