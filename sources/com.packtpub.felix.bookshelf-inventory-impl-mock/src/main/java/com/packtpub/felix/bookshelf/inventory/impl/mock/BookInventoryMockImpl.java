@@ -9,7 +9,7 @@ import java.util.*;
 
 @Component
 @Provides
-@Instantiate
+@Instantiate(name = "BookInventoryMockImpl")
 public class BookInventoryMockImpl implements BookInventory {
     public static final String DEFAULT_CATEGORY = "default";
     private Map<String, MutableBook> booksByISBN = new HashMap<String, MutableBook>();

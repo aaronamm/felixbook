@@ -5,19 +5,23 @@ import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntim
 import com.packtpub.felix.bookshelf.service.api.BookshelfService;
 import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
 import com.packtpub.felix.bookshelf.service.api.SessionNotValidRuntimeException;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceReference;
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+import org.apache.felix.ipojo.annotations.Provides;
+import org.apache.felix.ipojo.annotations.Requires;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
+@Component
+@Provides
+@Instantiate(name = "BookshelfServiceImpl")
 public class BookshelfServiceImpl implements BookshelfService {
     private String sessionId;
-    private BundleContext context;
 
-    public BookshelfServiceImpl(BundleContext context) {
-        this.context = context;
-    }
+    @Requires
+    private BookInventory inventory;
 
     public String login(String username, char[] password) throws InvalidCredentialsException {
         if ("admin".equals(username) &&
@@ -132,14 +136,7 @@ public class BookshelfServiceImpl implements BookshelfService {
     }
 
     private BookInventory lookupBookInventory() throws BookInventoryNotRegisteredRuntimeException {
-        String name = BookInventory.class.getName();
-        ServiceReference ref =
-                this.context.getServiceReference(name);
-        if (ref == null) {
-            throw new
-                    BookInventoryNotRegisteredRuntimeException(name);
-        }
-        return (BookInventory) this.context.getService(ref);
+        return this.inventory;
     }
 
 
