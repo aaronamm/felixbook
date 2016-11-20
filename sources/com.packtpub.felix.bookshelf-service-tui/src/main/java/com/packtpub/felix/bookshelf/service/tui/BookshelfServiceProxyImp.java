@@ -4,21 +4,26 @@ import com.packtpub.felix.bookshelf.inventory.api.Book;
 import com.packtpub.felix.bookshelf.inventory.api.BookNotFoundException;
 import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntimeException;
 import com.packtpub.felix.bookshelf.service.api.BookshelfService;
-import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
 import com.packtpub.felix.bookshelf.service.api.SessionNotValidRuntimeException;
+import org.apache.felix.ipojo.annotations.*;
 import org.apache.felix.service.command.Descriptor;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
-
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
+@Provides
+@Instantiate
 public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
-    private BundleContext context;
 
-    public BookshelfServiceProxyImp(BundleContext context) {
-        this.context = context;
-    }
+    @Requires
+    private  BookshelfService service;
+
+    @ServiceProperty(name = "osgi.command.scope",value = SCOPE)
+    private String gogoScope;
+
+    @ServiceProperty(name = "osgi.command.function", value = FUNCTIONS)
+    private String[] gogoFunctions;
 
     @Descriptor("Search books by author, title, or category")
     public Set<Book> search(
@@ -28,7 +33,6 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
             @Descriptor("match like (use % at the beginning or end of <like>" +
                     " for wild-card)") String filter) {
         try {
-            BookshelfService service = lookupService();
             String sessionId = service.login(username, password.toCharArray());
 
             Set<String> results = new HashSet<String>();
@@ -49,19 +53,6 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
         }
     }
 
-    private BookshelfService lookupService() {
-        ServiceReference reference = context.getServiceReference(BookshelfService.class.getName());
-        if (reference == null) {
-            throw new RuntimeException("BookshelfService not registered, cannot invoke operation");
-        }
-
-        BookshelfService service = (BookshelfService) this.context.getService(reference);
-        if (service == null) {
-            // could have been unregistered since above lookup
-            throw new RuntimeException("BookshelfService not registered, cannot invoke operation");
-        }
-        return service;
-    }
 
 
     @Descriptor("Search books by rating")
@@ -73,9 +64,7 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
             if (!"rating".equals(attribute)) {
                 throw new RuntimeException("Invalid attribute, expecting 'rating' got '" + attribute + "'");
             }
-            BookshelfService service = lookupService();
-            String sessionId =
-                    service.login(username, password.toCharArray());
+            String sessionId = service.login(username, password.toCharArray());
             Set<String> results = service.searchBooksByRating(sessionId, lower, upper);
             return getBooks(sessionId, service, results);
         } catch (Exception ex) {
@@ -102,7 +91,6 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
                       @Descriptor("Category") String category,
                       @Descriptor("Rating (0..10)") int rating) {
         try {
-            BookshelfService service = lookupService();
             String sessionId = service.login(
                     username, password.toCharArray());
             service.addBook( sessionId, isbn, title, author, category, rating);
@@ -113,4 +101,13 @@ public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
         }
     }
 
+    @PostRegistration
+    public  void registered(ServiceReference serviceReference){
+        System.out.println( this.getClass().getSimpleName() + " registered");
+    }
+
+    @PostUnregistration
+    public  void unregistered(ServiceReference serviceReference){
+        System.out.println( this.getClass().getSimpleName() + " unregistered");
+    }
 }

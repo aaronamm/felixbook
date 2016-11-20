@@ -1,16 +1,16 @@
 package com.packtpub.felix.bookshelf.inventory.impl.mock;
 
 import com.packtpub.felix.bookshelf.inventory.api.*;
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
-import org.apache.felix.ipojo.annotations.Provides;
+import org.apache.felix.ipojo.annotations.*;
+import org.osgi.framework.ServiceReference;
 
 import java.util.*;
 
 @Component
 @Provides
-@Instantiate(name = "BookInventoryMockImpl")
+@Instantiate
 public class BookInventoryMockImpl implements BookInventory {
+
     public static final String DEFAULT_CATEGORY = "default";
     private Map<String, MutableBook> booksByISBN = new HashMap<String, MutableBook>();
     private Map<String, Integer> categories = new HashMap<String, Integer>();
@@ -113,7 +113,7 @@ public class BookInventoryMockImpl implements BookInventory {
 
         //copy match with criteria book
         HashSet<String> isbns = new HashSet<String>();
-        for(Book book : books){
+        for (Book book : books) {
             isbns.add(book.getIsbn());
         }
         return isbns;
@@ -174,5 +174,15 @@ public class BookInventoryMockImpl implements BookInventory {
             return true;
         }
         return false;
+    }
+
+    @PostRegistration
+    public void registered(ServiceReference serviceReference) {
+        System.out.println(this.getClass().getSimpleName() + " registered");
+    }
+
+    @PostUnregistration
+    public void unregistered(ServiceReference serviceReference) {
+        System.out.println(this.getClass().getSimpleName() + " unregistered");
     }
 }

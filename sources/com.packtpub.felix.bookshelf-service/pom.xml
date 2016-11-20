@@ -80,6 +80,9 @@
                         <goals>
                             <goal>ipojo-bundle</goal>
                         </goals>
+                        <configuration>
+                            <metadata/>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>

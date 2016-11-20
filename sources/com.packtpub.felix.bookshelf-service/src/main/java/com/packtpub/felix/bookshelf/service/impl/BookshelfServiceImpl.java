@@ -5,19 +5,18 @@ import com.packtpub.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntim
 import com.packtpub.felix.bookshelf.service.api.BookshelfService;
 import com.packtpub.felix.bookshelf.service.api.InvalidCredentialsException;
 import com.packtpub.felix.bookshelf.service.api.SessionNotValidRuntimeException;
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
-import org.apache.felix.ipojo.annotations.Provides;
-import org.apache.felix.ipojo.annotations.Requires;
+import org.apache.felix.ipojo.annotations.*;
+import org.osgi.framework.ServiceReference;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Set;
 
-@Component
+@Component(name = "BookshelfServiceImpl",immediate = true)
 @Provides
-@Instantiate(name = "BookshelfServiceImpl")
+@Instantiate(name = "BookshelfServiceInstance")
 public class BookshelfServiceImpl implements BookshelfService {
+
     private String sessionId;
 
     @Requires
@@ -137,6 +136,17 @@ public class BookshelfServiceImpl implements BookshelfService {
 
     private BookInventory lookupBookInventory() throws BookInventoryNotRegisteredRuntimeException {
         return this.inventory;
+    }
+
+    @PostRegistration
+    public void registered(ServiceReference ref) {
+        System.out.println(this.getClass().getSimpleName() + " registered");
+    }
+
+    @PostUnregistration
+    public void unregistered(ServiceReference ref) {
+
+        System.out.println(this.getClass().getSimpleName() + " unregistered");
     }
 
 

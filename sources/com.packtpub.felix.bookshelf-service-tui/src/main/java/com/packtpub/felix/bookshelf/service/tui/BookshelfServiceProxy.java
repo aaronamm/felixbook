@@ -14,9 +14,7 @@ import java.util.Set;
  */
 public interface BookshelfServiceProxy {
     String SCOPE = "book";
-    String[] FUNCTIONS = new String[]{
-            "search", "add"
-    };
+    String FUNCTIONS =   "[search,add]";
 
     Set<Book> search(String username, String password, String attribute, String filter);
 

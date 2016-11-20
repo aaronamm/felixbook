@@ -45,6 +45,11 @@
             <version>0.16.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+            <version>1.12.1</version>
+        </dependency>
 
     </dependencies>
 
@@ -62,12 +67,12 @@
                         <Export-Package>
                             com.packtpub.felix.bookshelf.service.tui
                         </Export-Package>
-                        <Bundle-Activator>
-                           com.packtpub.felix.bookshelf.service.tui.activator.BookshelfTuiActivator
-                        </Bundle-Activator>
-                        <private-Package>
-                            com.packtpub.felix.bookshelf.service.tui.activator
-                        </private-Package>
+                        <!--<Bundle-Activator>-->
+                           <!--com.packtpub.felix.bookshelf.service.tui.activator.BookshelfTuiActivator-->
+                        <!--</Bundle-Activator>-->
+                        <!--<private-Package>-->
+                            <!--com.packtpub.felix.bookshelf.service.tui.activator-->
+                        <!--</private-Package>-->
                     </instructions>
                     <remoteOBR>repo-rel</remoteOBR>
                     <prefixUrl>
@@ -88,6 +93,25 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.felix/maven-ipojo-plugin -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-ipojo-plugin</artifactId>
+                <version>1.12.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                        <configuration>
+                            <metadata/>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 
