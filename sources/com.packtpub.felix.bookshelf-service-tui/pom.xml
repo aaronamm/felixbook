@@ -6,7 +6,7 @@
 
     <groupId>com.packtpub.felix</groupId>
     <artifactId>com.packtpub.felix.bookshelf-service-tui</artifactId>
-    <version>1.5.0</version>
+    <version>1.10.0</version>
 
     <packaging>bundle</packaging>
     <name>Bookshelf Service TUI</name>
@@ -16,19 +16,16 @@
 
     <dependencies>
 
-
         <dependency>
             <groupId>com.packtpub.felix</groupId>
             <artifactId>com.packtpub.felix.bookshelf-service</artifactId>
-            <version>1.5.0</version>
+            <version>1.10.0</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>com.packtpub.felix</groupId>
             <artifactId>com.packtpub.felix.bookshelf-inventory-api</artifactId>
-            <version>1.5.0</version>
+            <version>1.10.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.osgi/org.osgi.core -->

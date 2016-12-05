@@ -6,9 +6,9 @@ import org.osgi.framework.ServiceReference;
 
 import java.util.*;
 
-@Component
+@Component(name = "BookInventoryMockImpl")
 @Provides
-@Instantiate
+@Instantiate(name = "BookInventoryMockImplInstance")
 public class BookInventoryMockImpl implements BookInventory {
 
     public static final String DEFAULT_CATEGORY = "default";

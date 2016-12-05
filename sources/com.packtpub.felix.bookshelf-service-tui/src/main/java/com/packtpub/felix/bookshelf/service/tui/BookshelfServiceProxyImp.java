@@ -11,9 +11,9 @@ import org.osgi.framework.ServiceReference;
 import java.util.HashSet;
 import java.util.Set;
 
-@Component
+@Component(name = "BookshelfServiceProxyImp")
 @Provides
-@Instantiate
+@Instantiate(name = "BookshelfServiceProxyImpInstance")
 public class BookshelfServiceProxyImp implements BookshelfServiceProxy {
 
     @Requires
